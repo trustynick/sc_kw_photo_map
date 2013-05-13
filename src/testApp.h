@@ -35,7 +35,8 @@ class testApp : public ofBaseApp{
     bool displayLg;
     bool displayLogo =false;
     
-    
+    long kwSwitchMark;
+    long kwSwitchTresh= 5000;
     
     
     ofTrueTypeFont din;
@@ -102,6 +103,7 @@ class testApp : public ofBaseApp{
     void formLetters();
     void formGrid();
     void drawLogo();
+    void switchKW();
     
     ofDirectory dir;
     vector<ofImage> images;

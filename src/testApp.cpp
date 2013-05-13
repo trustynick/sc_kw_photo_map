@@ -165,7 +165,7 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
-    
+    switchKW();
     for(int i=0; i<keywords.size();i++){
         keywords[i].move();
         
@@ -359,7 +359,9 @@ void testApp::keyPressed(int key){
     if(key == 'f'){
         
         int i = ofRandom(keywords.size());
+      
         keywords[i].setFeatured();
+        //keywords[featured].featured=false;
         featured=i;
     }
 }
@@ -478,6 +480,24 @@ void testApp::formGrid(){
     }
 }
 
+void testApp::switchKW(){
+
+    if(ofGetElapsedTimeMillis()-kwSwitchMark>kwSwitchTresh){
+        kwSwitchMark=ofGetElapsedTimeMillis();
+    
+        int i = ofRandom(keywords.size());
+        
+        keywords[i].setFeatured();
+        //keywords[featured].featured=false;
+        featured=i;
+       
+    
+    }
+    
+    
+
+}
+
 
 int testApp::randNeg(){
     int mult = ofRandom(-2,2);
@@ -505,6 +525,7 @@ void testApp::drawLogo(){
     ofPopMatrix();
 
 }
+
 
 
 //void testApp::formLetters(){
