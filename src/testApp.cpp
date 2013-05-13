@@ -77,7 +77,7 @@ void testApp::setup(){
     headerTextX = w/2-headerTextWidth/2- ((w-mapBoxWidth)-headerTextWidth)/2;
     
     mapBoxX= w-mapBoxWidth;
-    mapBoxY=h-headerHeight-footerHeight-mapBoxheight;
+    mapBoxY=h-footerHeight-mapBoxheight;
     
     
     //load list of key words
@@ -93,7 +93,11 @@ void testApp::setup(){
         scKeyword kw;
         
         keywords.push_back(kw);
-        keywords[i].init(s, tempPos, ofVec2f(mapBoxX-din.stringWidth(s),mapBoxY-din.stringHeight(s)), ofVec2f(mapBoxX+mapBoxWidth,mapBoxY+mapBoxheight), din);
+        
+        ofVec2f lim1= ofVec2f(mapBoxX,mapBoxY);
+        ofVec2f lim2= ofVec2f(w,h);
+        
+        keywords[i].init(s, tempPos, lim1, lim2, din);
         
     }
         
@@ -263,7 +267,7 @@ void testApp::draw(){
     
     //ofPushMatrix();
    // ofScale(scale,scale);
-    ofTranslate(translate.x, translate.y);
+   // ofTranslate(translate.x, translate.y);
     
         
    
@@ -338,6 +342,9 @@ void testApp::draw(){
     
     
     keywords[featured].draw(din);
+    
+    // ofSetColor(255,10,12);
+    //ofRect(mapBoxX, 0, mapBoxWidth-100, 100);
     
 }
 

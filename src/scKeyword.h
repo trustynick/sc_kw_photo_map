@@ -20,7 +20,7 @@ public:
     
     ofVec2f pos;
     ofVec2f tPos;
-    float easeVal =.01;
+    float easeVal =.02;
     bool featured;
     bool moving=true;
     
@@ -32,11 +32,11 @@ public:
     
     ofColor color;
     float scale = .15;
-    float tScale;
+    float tScale = scale;
     
     string keyword;
     vector<string> interviews;
-    
+    ofTrueTypeFont font;
     //methods
     
     void init(string _keyword, ofVec2f _pos, ofVec2f _lim1, ofVec2f _lim2, ofTrueTypeFont _font);

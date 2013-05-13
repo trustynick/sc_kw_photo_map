@@ -24,7 +24,7 @@ void scKeyword::init(string _keyword, ofVec2f _pos, ofVec2f _lim1, ofVec2f _lim2
     speed = ofVec2f(ofRandom(.1, 1)*neg1,ofRandom(.01, .25)*neg2);
 
     color= ofColor(ofRandom(55,110));
-
+    font=_font;
 }
 
 void scKeyword::draw(ofTrueTypeFont _font){
@@ -36,31 +36,35 @@ void scKeyword::draw(ofTrueTypeFont _font){
     
     ofPopMatrix();
 
-    
-}
+   }
 
 
 void scKeyword::update(){
     
     
     if(tScale<scale){
-        scale+=easeVal*abs(scale-tScale);
-    
+        scale-=easeVal*abs(tScale-scale);
     }
     
     if(tScale>scale){
-        scale-=easeVal*abs(scale-tScale);
+        scale+=easeVal*abs(tScale-scale);
+    }
+    
+    if(abs(tScale-scale)<.001){
+    
+        scale=tScale;
         
+
     }
     
     
     if(tPos.x > pos.x){
-        pos.x-=easeVal*abs(tPos.x-pos.x);
+        pos.x+=easeVal*abs(tPos.x-pos.x);
     
     }
     
     if(tPos.y > pos.y){
-        pos.y-=easeVal*abs(tPos.y-pos.y);
+        pos.y+=easeVal*abs(tPos.y-pos.y);
         
     }
     
@@ -100,7 +104,6 @@ void scKeyword::move(){
         speed.y*=-1;
         
     }
-    
     }
     
 }
@@ -110,8 +113,18 @@ void scKeyword::setFeatured(){
     color=255;
     featured = true;
     moving = false;
-    tPos = ofVec2f((limit2.x-limit1.x/2), (limit2.y-limit1.y/2) );
-    tScale = 1;
+    
+    int tWidth=limit2.x-limit1.x-200;
+    
+     tScale = ( tWidth/font.stringWidth(keyword));
+    if(tScale>1){
+        tScale=1;
+    
+    }
+    
+    tPos = ofVec2f(limit1.x+(limit2.x-limit1.x)/2-(font.stringWidth(keyword)*tScale/2), (limit1.y+(limit2.y-limit1.y)/2)+font.stringHeight(keyword)/2 );
+   
+    
 
 
 }
