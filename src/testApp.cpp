@@ -154,12 +154,9 @@ void testApp::setup(){
                 int index = y*gridX+x;
                 scPhotos[index].process();
                 
-                
             }
         }
-      
     }
-
 }
 
 //--------------------------------------------------------------
@@ -168,17 +165,21 @@ void testApp::update(){
     switchKW();
     for(int i=0; i<keywords.size();i++){
         keywords[i].move();
-        
         if(keywords[i].featured){
             keywords[i].update();
         }
     
     }
     
-    for(int i = 0; i<numDisplay;i++){
-        scPhotos[i].update();
-                
+//    for(int i = 0; i<numDisplay;i++){
+//        scPhotos[i].update();
+//                
+//    }
+    
+    for(int i = 0; i<keywords[featured].interviews.size();i++){
+        keywords[featured].interviews[i].update();
     }
+    
     
     lgPhotos[lgIndex].update();
     lgPhotos[lgIndex2].update();
@@ -277,17 +278,13 @@ void testApp::draw(){
     
     ofSetColor(50);
     ofRect(w-mapBoxWidth, headerHeight, mapBoxWidth, h-headerHeight-footerHeight);
-    
     //draw bg word texture
     
     
     for(int i = 0; i<keywords.size(); i++){
-        
         if(!keywords[i].featured){
         keywords[i].draw(din);
         }
-    
-    
     }
     
     
@@ -304,33 +301,19 @@ void testApp::draw(){
     }
     
     
-    if(mode == 0){
-        ofEnableAlphaBlending();
-        ofSetColor(255,255,255,255);
-        lgPhotos[lgIndex].draw();
-        ofPushMatrix();
-        ofTranslate(lgPhotos[lgIndex].dims.x, 0);
-        
-        lgPhotos[lgIndex2].draw();
-        
-        ofPopMatrix();
-        ofDisableAlphaBlending();
-        
-    }
-
-    
-    
-    if(mode == 1 || mode == 2){
-        for(int i=0; i<scPhotos.size(); i++){
-            ofEnableAlphaBlending();
-            scPhotos[i].draw();
-            ofDisableAlphaBlending();
-        }
-        
-        //ofPopMatrix();
-        
-    }
-
+//    if(mode == 0){
+//        ofEnableAlphaBlending();
+//        ofSetColor(255,255,255,255);
+//        lgPhotos[lgIndex].draw();
+//        ofPushMatrix();
+//        ofTranslate(lgPhotos[lgIndex].dims.x, 0);
+//        
+//        lgPhotos[lgIndex2].draw();
+//        
+//        ofPopMatrix();
+//        ofDisableAlphaBlending();
+//        
+//    }
     
     
     ofSetColor(160, 60, 0);
@@ -341,12 +324,25 @@ void testApp::draw(){
     headerFont.drawString(headerText, headerTextX, headerHeight-(headerHeight/2-headerFont.getSize()/2));
     
     
+    
+    keywords[featured].drawPoints();
     keywords[featured].draw(din);
     
-    // ofSetColor(255,10,12);
-    //ofRect(mapBoxX, 0, mapBoxWidth-100, 100);
+    keywords[featured].drawPhotos(gridX, gridY, dims.x, dims.y, headerHeight);
+  
     
-}
+    
+       
+    
+    if(pointIndex<keywords[featured].interviews.size()){
+    keywords[featured].addPoint(pointIndex);
+
+    pointIndex++;
+        //cout<<"gothere"<<endl;
+    }
+   
+    
+   }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
@@ -485,17 +481,22 @@ void testApp::switchKW(){
     if(ofGetElapsedTimeMillis()-kwSwitchMark>kwSwitchTresh){
         kwSwitchMark=ofGetElapsedTimeMillis();
     
-        int i = ofRandom(keywords.size());
+        int k = ofRandom(keywords.size());
         
-        keywords[i].setFeatured();
+        vector<scPhoto> _interviews;
+        for(int i=0; i<ofRandom(10,30); i++){
+            
+            _interviews.push_back(scPhotos[ofRandom(scPhotos.size())]);
+            
+        
+        }
+        
+        keywords[k].getInterviews(_interviews);
+        keywords[k].setFeatured();
         //keywords[featured].featured=false;
-        featured=i;
-       
-    
+        featured=k;
+        pointIndex=0;
     }
-    
-    
-
 }
 
 
@@ -526,35 +527,3 @@ void testApp::drawLogo(){
 
 }
 
-
-
-//void testApp::formLetters(){
-//    stringPoints = dotFont.getStringAsPoints("family");
-//    //loop through the vector of characters form our string
-//    
-//    int totalPoints = 0;
-//    for(int i = 0; i<stringPoints.size(); i++){
-//        //now loop through each chars and get the subpaths
-//        for(int j = 0; j<stringPoints[i].getSubPaths().size(); j++){
-//            ofSubPath sp = stringPoints[i].getSubPaths()[j];
-//            ofPoint p1 = sp.getCommands()[3].cp1;
-//            //ofCircle(p1.x+100, p1.y+700, 3);
-//            scPhotos[totalPoints].tPos = ofVec2f(p1.x+w/10+70,p1.y+fontSize+headerHeight+200);
-//            scPhotos[totalPoints].shapeTrans("circ");
-//            scPhotos[totalPoints].tTextScale = fontSize/1300;
-//            cout<<"tScale= "<< scPhotos[1].tTextScale<<"\n ";
-//            //scPhotos[totalPoints].tTextScale = .3;
-//            
-//            cout<<"totalPoints"<<index<<"\n";
-//               totalPoints+=1;
-//        }
-//    }
-//
-//   // cout<<"total point: "<<totalPoints<<"\n";
-//    for(int p = totalPoints; p<scPhotos.size(); p++){
-//        
-//       // scPhotos[p].tPos = ofVec2f(randNeg()*ofRandom(2000,8000),ofRandom(-9000,9000));
-//      
-//        scPhotos[p].fade = true;
-//    }
-//}

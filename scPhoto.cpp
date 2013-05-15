@@ -32,6 +32,12 @@ void scPhoto:: init(ofImage _image, ofVec2f _pos, ofVec2f _dims){
     else
         maskAlpha =0;
     
+    
+//get zipcode location
+    ofVec2f zLoc=ofVec2f(ofRandom(ofGetWidth()/2,ofGetWidth()),ofRandom(ofGetHeight()/2,ofGetHeight()));
+    
+  zipLoc=zLoc;
+    
 
 //initialize variables
     //image.loadImage(_file);
@@ -40,10 +46,9 @@ void scPhoto:: init(ofImage _image, ofVec2f _pos, ofVec2f _dims){
     tPos = pos;
     tDims = dims;
     
-    easeVal = 10;
+   
     ease = ofVec2f(10,10);
     alphaVal = 255;
-    fadeVal =.5;
     fade = false;
     shade = false;
    }
@@ -136,7 +141,39 @@ void scPhoto::process(){
 }
 
 
-void scPhoto::update(){ //check if vals = targets and update if not
+void scPhoto::update(){
+    
+    
+    if(tPointAlpha>pointAlpha){
+        pointAlpha+=fadeVal;
+    
+    }
+    if(tPointAlpha<pointAlpha){
+        pointAlpha-=fadeVal;
+        
+    }
+    
+    if(tPointLoc.x>pointLoc.x){
+        pointLoc.x+=easeVal*abs(tPointLoc.x-pointLoc.x);
+    
+    }
+    if(tPointLoc.y>pointLoc.y){
+        pointLoc.y+=easeVal*abs(tPointLoc.y-pointLoc.y);
+        
+    }
+    
+    if(tPointLoc.x<pointLoc.x){
+        pointLoc.x-=easeVal*abs(tPointLoc.x-pointLoc.x);
+        
+    }
+    if(tPointLoc.y<pointLoc.y){
+        pointLoc.y-=easeVal*abs(tPointLoc.y-pointLoc.y);
+        
+    }
+    
+    
+    
+    //check if vals = targets and update if not
     //easeVal = abs()
     ease = ofVec2f(fabs(tPos.x-pos.x)*.05,fabs(tPos.y-pos.y)*.05);
     

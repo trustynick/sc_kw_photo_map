@@ -105,6 +105,9 @@ class testApp : public ofBaseApp{
     void drawLogo();
     void switchKW();
     
+    int pointIndex=0;
+    
+    
     ofDirectory dir;
     vector<ofImage> images;
     vector<scPhoto> scPhotos;

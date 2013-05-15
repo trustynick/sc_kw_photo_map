@@ -17,8 +17,19 @@ class scPhoto {
 public:
     
 //variables
+    
+    string interviewID;
+    int zip;
+    
+    ofVec2f zipLoc;
+    ofVec2f pointLoc=ofVec2f(ofGetWidth()*.75,ofGetHeight()*.75);
+    ofVec2f tPointLoc=pointLoc;
+    float pointAlpha=0;
+    float tPointAlpha=0;
+    
     ofImage image;
     ofImage pImage;
+    
     
     ofVec2f pos;
     ofVec2f tPos;  //targed position
@@ -41,13 +52,13 @@ public:
     //int w, h; //width & height
     //int wT, hT;// width & height Targets;
     
-    float easeVal;
+    float easeVal=.01;
     ofVec2f ease;
     float dimEase;
     
     //fade vars
     float alphaVal;
-    float fadeVal;
+    float fadeVal=1;
     
     float maskAlpha;
     float tMaskAlpha;

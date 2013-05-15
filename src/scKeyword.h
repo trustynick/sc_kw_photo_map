@@ -11,10 +11,12 @@
 
 #include <iostream>
 #include "ofMain.h"
+#include "scPhoto.h"
 
 
 class scKeyword {
 public:
+    
     
     //variables
     
@@ -23,6 +25,7 @@ public:
     float easeVal =.02;
     bool featured;
     bool moving=true;
+  
     
     ofVec2f limit1;
     ofVec2f limit2;
@@ -31,11 +34,16 @@ public:
     
     
     ofColor color;
+    
+   
+    
     float scale = .15;
     float tScale = scale;
     
     string keyword;
-    vector<string> interviews;
+    
+    vector<scPhoto> interviews;
+    
     ofTrueTypeFont font;
     //methods
     
@@ -45,7 +53,10 @@ public:
     void setTarg(ofVec2f tPos);
     void move();
     void setFeatured();
-
+    void getInterviews(vector<scPhoto> _interviews);
+    void drawPhotos(int _gridX, int _gridY, int _dimX, int _dimY, int _offset);
+    void drawPoints();
+    void addPoint(int p);
 };
 
 
