@@ -172,6 +172,13 @@ void scPhoto::update(){
     }
     
     
+    if(abs(tPointLoc.y-pointLoc.y)<1){
+        pointLoc.y= tPointLoc.y;
+    }
+    if(abs(tPointLoc.x-pointLoc.x)<1){
+        pointLoc.x= tPointLoc.x;
+    }
+    
     
     //check if vals = targets and update if not
     //easeVal = abs()
@@ -276,3 +283,36 @@ void scPhoto::shapeTrans(string _shape){
 //cout<<"t shape = "<<tShape<<", shape = "<<shape<<"\n";
     
 }
+
+void scPhoto::drawPoint(){
+    if(abs(tPointLoc.y-pointLoc.y)<5 && abs(tPointLoc.x-pointLoc.x)<5){
+        ofSetColor(255, 50, 0, pointAlpha);
+        pointSize=10;
+        
+    }
+    
+    else {
+               ofSetColor(255,pointAlpha);
+         pointSize=15;
+
+    }
+    
+    ofEnableAlphaBlending();
+    
+    
+    ofCircle(pointLoc.x,pointLoc.y,pointSize);
+    
+    
+    
+        
+   
+    //cout<<"got here"<<endl;
+    ofDisableAlphaBlending();
+
+    
+    
+    
+    
+
+}
+

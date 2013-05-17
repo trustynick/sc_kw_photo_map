@@ -20,13 +20,6 @@ public:
     
     string interviewID;
     int zip;
-    
-    ofVec2f zipLoc;
-    ofVec2f pointLoc=ofVec2f(ofGetWidth()*.75,ofGetHeight()*.75);
-    ofVec2f tPointLoc=pointLoc;
-    float pointAlpha=0;
-    float tPointAlpha=0;
-    
     ofImage image;
     ofImage pImage;
     
@@ -38,7 +31,7 @@ public:
     
     ofVec2f dims;
     ofVec2f tDims;
-
+    
     
     int yOffSet;
     float x,y; //position
@@ -67,7 +60,27 @@ public:
     bool shade;
     bool shadeOn;
     bool maskFade;
+
     
+    
+    
+    ofVec2f zipLoc;
+    
+    //to start centered in map
+    //ofVec2f pointLoc=ofVec2f(ofGetWidth()*.75,ofGetHeight()*.75);
+    
+    //to start at photo
+    ofVec2f pointLoc=pos;
+    
+    ofVec2f tPointLoc=pointLoc;
+    float pointAlpha=0;
+    float tPointAlpha=0;
+    int pointSize=10;
+    ofColor pointColor =255;
+    
+    
+    
+       
 //constructor
    // scPhoto(string _file, int _x, int _y, int _w, int _h);
     //scPhoto(, float _x, float _y, int _w, int _h, float _easeVal);
@@ -84,6 +97,8 @@ public:
     void reSize(int _w, int _h);
     void checkMouse(int _x,int _y);
     void shapeTrans(string _shape);
+    void drawPoint();
+    
 };
 
 #endif

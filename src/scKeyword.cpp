@@ -113,10 +113,11 @@ void scKeyword::move(){
 }
 
 
-void scKeyword::setFeatured(){
+void scKeyword::setFeatured(vector<scPhoto> _interviews){
     color=255;
     featured = true;
     moving = false;
+    
     
     int tWidth=limit2.x-limit1.x-200;
     
@@ -128,46 +129,67 @@ void scKeyword::setFeatured(){
     
     tPos = ofVec2f(limit1.x+(limit2.x-limit1.x)/2-(font.stringWidth(keyword)*tScale/2), (limit1.y+(limit2.y-limit1.y)/2)+font.stringHeight(keyword)/2 );
    
-}
+    
+    if(!intInit){
+        for(int i=0; i<_interviews.size();i++){
+            interviews.push_back(_interviews[i]);
+            
+            interviews[i].alphaVal=0;
+            interviews[i].fade=true;
+            
+            //get zipcode location
+            ofVec2f zLoc=ofVec2f(ofRandom(limit1.x,limit2.x),ofRandom(limit1.y,limit2.y));
+            
+            
+            interviews[i].zipLoc=zLoc;
+            //cout<<keyword<<" zloc= "<<interviews[i].zipLoc.x<<", "<<interviews[i].zipLoc.y<<endl;
+            
+        }
+        intInit=true;
 
-void scKeyword::getInterviews(vector<scPhoto> _interviews){
-
-    for(int i=0; i<_interviews.size();i++){
-        interviews.push_back(_interviews[i]);
-        
-        
-        //get zipcode location
-        ofVec2f zLoc=ofVec2f(ofRandom(limit1.x,limit2.x),ofRandom(limit1.y,limit2.y));
-       
-        
-        interviews[i].zipLoc=zLoc;
-        //cout<<keyword<<" zloc= "<<interviews[i].zipLoc.x<<", "<<interviews[i].zipLoc.y<<endl;
-        
     }
+    
 }
+
+void scKeyword::setBg(){
+    
+    featured = false;
+    moving = true;
+    color= ofColor(ofRandom(55,110));
+    tScale = .15;
+
+}
+
 
 
 
 
 void scKeyword::drawPoints(){
-    for(int i=0; i< interviews.size(); i++){
-        interviews[i].update();
     
-    ofSetColor(200, 50, 50, interviews[i].pointAlpha);
-        ofEnableAlphaBlending();
-    ofCircle(interviews[i].pointLoc.x,interviews[i].pointLoc.y,10);
-        //cout<<"got here"<<endl;
-        ofDisableAlphaBlending();
-    }
+   
+    for(int i=0; i< interviews.size(); i++){
+        
+        if(interviews[i].alphaVal>250 && interviews[i].alphaVal<255){
+            addPoint(i);
+            
+        }
+        interviews[i].update();
+        interviews[i].drawPoint();
+               }
+    
+ 
+}
+
+void scKeyword::addPhoto(int p){
+  interviews[p].fade=false;
+
 }
 
 void scKeyword::addPoint(int p){
-
-    interviews[p].tPointAlpha=255;
+    
+    interviews[p].tPointAlpha=230;
     interviews[p].tPointLoc.x=interviews[p].zipLoc.x;
     interviews[p].tPointLoc.y=interviews[p].zipLoc.y;
-
-    
     
 }
 
@@ -179,13 +201,21 @@ void scKeyword::drawPhotos(int _gridX, int _gridY, int _dimX, int _dimY, int _of
            
            
            if(interviews.size()>index){
-           interviews[index].tPos.x=x*_dimX;
-           interviews[index].tPos.y=y*_dimY+_offset;
+           
+               if(!photoInit){
+               interviews[index].tPos.x=x*_dimX;
+                interviews[index].tPos.y=y*_dimY+_offset;
+                interviews[index].tPointLoc= interviews[index].tPos;
+                interviews[index].pointLoc= interviews[index].tPointLoc;
+                  
+               }
         interviews[index].draw();
+               
            }
     }
+         
     }
 
-
+photoInit=true;
 
 }

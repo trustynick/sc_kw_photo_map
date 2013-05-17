@@ -165,9 +165,9 @@ void testApp::update(){
     switchKW();
     for(int i=0; i<keywords.size();i++){
         keywords[i].move();
-        if(keywords[i].featured){
+        //if(keywords[i].featured){
             keywords[i].update();
-        }
+        //}
     
     }
     
@@ -229,10 +229,7 @@ void testApp::update(){
         lgPhotos[lgIndex2].fade = true;
     }
     
-    if(mode == 1){
-        formGrid();
-    }
-    
+        
     if(modeSwitch){
     if(ofGetElapsedTimeMillis()-modeMark>10000){
         modeMark = ofGetElapsedTimeMillis();
@@ -242,9 +239,6 @@ void testApp::update(){
             mode = 0;
         }
         
-        if(mode == 1){
-        formGrid();
-        }
         
         if(mode ==2){
            // formLetters();
@@ -324,22 +318,14 @@ void testApp::draw(){
     headerFont.drawString(headerText, headerTextX, headerHeight-(headerHeight/2-headerFont.getSize()/2));
     
     
-    
-    keywords[featured].drawPoints();
-    keywords[featured].draw(din);
-    
     keywords[featured].drawPhotos(gridX, gridY, dims.x, dims.y, headerHeight);
-  
     
-    
-       
-    
-    if(pointIndex<keywords[featured].interviews.size()){
-    keywords[featured].addPoint(pointIndex);
 
-    pointIndex++;
-        //cout<<"gothere"<<endl;
-    }
+    drawPoints();
+    
+       keywords[featured].draw(din);
+      
+    
    
     
    }
@@ -356,7 +342,7 @@ void testApp::keyPressed(int key){
         
         int i = ofRandom(keywords.size());
       
-        keywords[i].setFeatured();
+        //keywords[i].setFeatured();
         //keywords[featured].featured=false;
         featured=i;
     }
@@ -365,9 +351,6 @@ void testApp::keyPressed(int key){
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
     
-    if(key == 'g'){
-        formGrid();
-    }
     
     if(key == 'l'){
     
@@ -461,26 +444,27 @@ void testApp::dragEvent(ofDragInfo dragInfo){
 }
 
 
-void testApp::formGrid(){
-
-    for(int y = 0; y< gridY; y++){
-        for(int x = 0; x< gridX; x++){
-            int index = y*gridX+x;
-             scPhotos[index].fade = false;
-             scPhotos[index].tPos = ofVec2f(x* dims.x,y* dims.y+headerHeight);
-            scPhotos[index].shapeTrans("rect");
-            scPhotos[index].tTextScale = 1;
-
-
-         }
-    }
-}
+//void testApp::formGrid(){
+//
+//    for(int y = 0; y< gridY; y++){
+//        for(int x = 0; x< gridX; x++){
+//            int index = y*gridX+x;
+//             scPhotos[index].fade = false;
+//             scPhotos[index].tPos = ofVec2f(x* dims.x,y* dims.y+headerHeight);
+//            scPhotos[index].shapeTrans("rect");
+//            scPhotos[index].tTextScale = 1;
+//
+//
+//         }
+//    }
+//}
 
 void testApp::switchKW(){
 
     if(ofGetElapsedTimeMillis()-kwSwitchMark>kwSwitchTresh){
         kwSwitchMark=ofGetElapsedTimeMillis();
-    
+        
+       
         int k = ofRandom(keywords.size());
         
         vector<scPhoto> _interviews;
@@ -491,11 +475,14 @@ void testApp::switchKW(){
         
         }
         
-        keywords[k].getInterviews(_interviews);
-        keywords[k].setFeatured();
+        keywords[featured].setBg();
+        //keywords[k].getInterviews(_interviews);
+        keywords[k].setFeatured(_interviews);
         //keywords[featured].featured=false;
         featured=k;
         pointIndex=0;
+        kwSwitchTresh=pointDelay*keywords[featured].interviews.size();
+        
     }
 }
 
@@ -524,6 +511,29 @@ void testApp::drawLogo(){
     //scLogo.draw(0,0);    
     ofDisableAlphaBlending();
     ofPopMatrix();
+
+}
+
+
+//draw the points for featured word interviews one by one
+void testApp::drawPoints(){
+    
+    keywords[featured].drawPoints();
+    
+    if(pointIndex==0 && ofGetElapsedTimeMillis()-pointMark>pointDelay && pointIndex<keywords[featured].interviews.size()){
+    keywords[featured].addPhoto(pointIndex);
+    pointIndex++;
+    pointMark=ofGetElapsedTimeMillis();
+    }
+    
+    if(pointIndex>0 && keywords[featured].interviews[pointIndex-1].pointAlpha>200){
+        keywords[featured].addPhoto(pointIndex);
+        pointIndex++;
+        pointMark=ofGetElapsedTimeMillis();
+    }
+
+
+    
 
 }
 

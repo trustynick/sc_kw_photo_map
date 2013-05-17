@@ -25,13 +25,13 @@ public:
     float easeVal =.02;
     bool featured;
     bool moving=true;
-  
+    bool intInit=false;
+    bool photoInit=false;
+    
     
     ofVec2f limit1;
     ofVec2f limit2;
-    
     ofVec2f speed;
-    
     
     ofColor color;
     
@@ -52,11 +52,15 @@ public:
     void update();
     void setTarg(ofVec2f tPos);
     void move();
-    void setFeatured();
-    void getInterviews(vector<scPhoto> _interviews);
+    void setFeatured(vector<scPhoto> _interviews);
+    void setBg();
+    
+    void getInterviews();
     void drawPhotos(int _gridX, int _gridY, int _dimX, int _dimY, int _offset);
     void drawPoints();
+    void addPhoto(int p);
     void addPoint(int p);
+     
 };
 
 

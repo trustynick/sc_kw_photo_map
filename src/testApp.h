@@ -101,11 +101,15 @@ class testApp : public ofBaseApp{
     int h;
     
     void formLetters();
-    void formGrid();
+    //void formGrid();
     void drawLogo();
     void switchKW();
+    void drawPoints();
+    
     
     int pointIndex=0;
+    long pointMark=0;
+    int pointDelay=3000;
     
     
     ofDirectory dir;
