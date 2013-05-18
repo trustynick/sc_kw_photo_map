@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "scPhoto.h"
+#include "zipcodes.h"
 
 
 class scKeyword {
@@ -34,8 +35,7 @@ public:
     ofVec2f speed;
     
     ofColor color;
-    
-   
+    zipcodes zipcodes;
     
     float scale = .15;
     float tScale = scale;

@@ -37,7 +37,7 @@ void scPhoto:: init(ofImage _image, ofVec2f _pos, ofVec2f _dims){
     ofVec2f zLoc=ofVec2f(ofRandom(ofGetWidth()/2,ofGetWidth()),ofRandom(ofGetHeight()/2,ofGetHeight()));
     
   zipLoc=zLoc;
-    
+    getLocation("60064");//just a test of the function to pass in zip and get x,y pair
 
 //initialize variables
     //image.loadImage(_file);
@@ -299,20 +299,22 @@ void scPhoto::drawPoint(){
     
     ofEnableAlphaBlending();
     
-    
     ofCircle(pointLoc.x,pointLoc.y,pointSize);
-    
-    
-    
-        
-   
+
     //cout<<"got here"<<endl;
     ofDisableAlphaBlending();
 
-    
-    
-    
-    
 
 }
+ofVec2f scPhoto::getLocation(string Mzipcode){
+    
+    //this accepts a string zipcode and assigns pointLocation , returns ofVec2f x,y that is then equal to pointLoc (ofVec2f tPointLoc)
+   string location = Mzipcode;
+    
+    zipcodes.getIncomingZip( location);
+   // cout<<zipcodes.latitudeLongitude<<endl;
+    ofVec2f pointLocCoords=zipcodes.latitudeLongitude;//based on a map of chicago , scale the points - 
+    return pointLocCoords;
 
+    //I believe that we need to set this, based on zLoc "setFeatured() in scKeyword.cpp... but I'm not 100% sure of this so we'll figure it out tomorrow 
+}

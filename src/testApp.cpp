@@ -532,8 +532,8 @@ void testApp::drawPoints(){
         pointMark=ofGetElapsedTimeMillis();
     }
 
+   
 
     
-
 }
 

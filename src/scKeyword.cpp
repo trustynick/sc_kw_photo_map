@@ -138,7 +138,12 @@ void scKeyword::setFeatured(vector<scPhoto> _interviews){
             interviews[i].fade=true;
             
             //get zipcode location
-            ofVec2f zLoc=ofVec2f(ofRandom(limit1.x,limit2.x),ofRandom(limit1.y,limit2.y));
+           // ofVec2f zLoc=zipcodes.latitudeLongitude;
+             ofVec2f zLoc=ofVec2f(ofRandom(limit1.x,limit2.x),ofRandom(limit1.y,limit2.y));
+            
+            
+            
+            
             
             
             interviews[i].zipLoc=zLoc;

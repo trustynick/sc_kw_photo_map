@@ -11,6 +11,7 @@
 #include "ofMain.h"
 #include <iostream>
 #include <math.h>
+#include "zipcodes.h"
 
 
 class scPhoto {
@@ -19,18 +20,20 @@ public:
 //variables
     
     string interviewID;
-    int zip;
+    string zip;// = "60002";
     ofImage image;
     ofImage pImage;
     
     
-    ofVec2f pos;
+    ofVec2f pos; //original position of the dot
     ofVec2f tPos;  //targed position
     string shape;  //rect or ellpise
     string tShape;
     
     ofVec2f dims;
     ofVec2f tDims;
+    
+    zipcodes zipcodes;
     
     
     int yOffSet;
@@ -64,21 +67,28 @@ public:
     
     
     
-    ofVec2f zipLoc;
+    ofVec2f zipLoc;//this is the zipcode that is now random , initial point location that then heads to the target point loc
     
     //to start centered in map
     //ofVec2f pointLoc=ofVec2f(ofGetWidth()*.75,ofGetHeight()*.75);
-    
     //to start at photo
     ofVec2f pointLoc=pos;
+    //pos is the position of the IMAGE; which is the initial position of the dot 
     
-    ofVec2f tPointLoc=pointLoc;
+    
+    ofVec2f tPointLoc=pointLoc;//use this for the target position for the x,y after receiving a zipcode; it is equal to pointLoc which needs to be = to the point on the map based on the scale
     float pointAlpha=0;
     float tPointAlpha=0;
     int pointSize=10;
     ofColor pointColor =255;
+    //correspond to points mapped on the
+   // getLocation accept zip and assign pointLocation based on that
+    //interview ID corresponds to photo
+    //interviewData class contains a phoot
     
-    
+   ofVec2f getLocation(string Mzipcode);//takes a string zipcode value from the data class interviewID object,  id.Zip = interviewZip;
+    //returns an x,y position based on mapped image
+    string Mzipcode = zip;//just for the sake of trying, I'm assigning zip up above to equal "60002" and see that the getLocation function returns a scaled x,y position
     
        
 //constructor
@@ -98,6 +108,8 @@ public:
     void checkMouse(int _x,int _y);
     void shapeTrans(string _shape);
     void drawPoint();
+    
+    
     
 };
 

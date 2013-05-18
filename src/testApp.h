@@ -5,8 +5,10 @@
 #include <iostream>
 #include "ofxSVG.h"
 #include <cmath>
+#include <math.h>
 #include "ofxCsv.h"
 #include "scKeyword.h"
+#include "zipcodes.h"
 
 using namespace wng;
 
